@@ -13,10 +13,10 @@ function ConvertFrom-DirquotaList {
     BEGIN {
     	#region Helper functions
         function Convert-Size {
-	<#
-		.SYNOPSIS
-		helper function to convert size to GB			
-	#>
+			<#
+			.SYNOPSIS
+			helper function to convert size to GB			
+			#>
             param (
                 $string, $seperator, $Figure
             )
@@ -24,8 +24,9 @@ function ConvertFrom-DirquotaList {
                 $String = $String -replace '\.'
             }
 
-            [Int]$Whole, [Int]$Decimal = $String.split($seperator)
-
+            $Whole, $Decimal = $String.split($seperator)
+            [int]$Whole = $Whole -replace ' '
+            [int]$Decimal = $Decimal -replace ' '
             if ($Figure -eq "TB") {
                 [Math]::Round((($Whole + ($Decimal / 100)) * 1024), 2)
             } elseif ($Figure -eq "GB") {
