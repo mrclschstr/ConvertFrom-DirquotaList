@@ -1,7 +1,7 @@
 function ConvertFrom-DirquotaList {
     <#
 	.SYNOPSIS
-	Convert output from Dirquota quota list to an PS Object 
+	Convert output from Dirquota quota list to an object 
 	.NOTES
 	Original code from Technet gallery by Ben Wilkinson https://gallery.technet.microsoft.com/scriptcenter/Find-and-Report-on-cc49120e
 #>
@@ -11,6 +11,32 @@ function ConvertFrom-DirquotaList {
         $InputObject
     )
     BEGIN {
+    	#region Helper functions
+        function Convert-Size {
+	<#
+		.SYNOPSIS
+		helper function to convert size to GB			
+	#>
+            param (
+                $string, $seperator, $Figure
+            )
+            if ($seperator -eq ',') {
+                $String = $String -replace '\.'
+            }
+
+            [Int]$Whole, [Int]$Decimal = $String.split($seperator)
+
+            if ($Figure -eq "TB") {
+                [Math]::Round((($Whole + ($Decimal / 100)) * 1024), 2)
+            } elseif ($Figure -eq "GB") {
+                [Math]::Round(($Whole + ($Decimal / 100)), 2)
+            } elseif ($Figure -eq "MB") {
+                [Math]::Round((($Whole + ($Decimal / 100)) / 1024), 2)
+            } elseif ($figure -eq "KB") {
+                [Math]::Round((($Whole + ($Decimal / 100)) / 1024 / 1024), 2)
+            }
+        }
+        #endregion
         $pattern = '^.{24}'
         $dirQuotaItems = @()
     }
