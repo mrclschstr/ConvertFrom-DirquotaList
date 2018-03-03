@@ -1,7 +1,9 @@
 function ConvertFrom-DirquotaList {
     <#
 	.SYNOPSIS
-		Convert output from Dirquota quota list to an PS Object 
+	Convert output from Dirquota quota list to an PS Object 
+	.NOTES
+	Original code from Technet gallery by Ben Wilkinson https://gallery.technet.microsoft.com/scriptcenter/Find-and-Report-on-cc49120e
 #>
 
     param(
