@@ -55,7 +55,10 @@ function ConvertFrom-DirquotaList {
         for ($i = 0; $i -lt $dirQuotaItems.count - 1; $i++) {
             if (($dirQuotaItems[$i] -match "Quota Path:") -or ($dirQuotaItems[$i] -match "Kontingentpfad:") -or ($dirQuotaItems[$i] -match "ka przydzia.u:")) {
                 [String]$QuotaPath = ($dirQuotaItems[$i] -split $pattern)[1]
-                if (($dirQuotaItems[$i + 1] -match "Share Path:") -or ($dirQuotaItems[$i + 1] -match "Freigabepfad:")) {
+				if (($dirQuotaItems[$i + 1] -match "Description:") - ($dirQuotaItems[$i + 1] -match "Beschreibung:")){
+					$i++
+				}
+                if (($dirQuotaItems[$i + 1] -match "Share Path:") -or ($dirQuotaItems[$i + 1] -match "Freigabepfad:") -or ($dirQuotaItems[$i + 1] -match "Szablon .r.d.owy:") ) {
                     [String]$SharePath = ($dirQuotaItems[$i + 1] -split $pattern)[1]
                 } else {
                     $SharePath = $null
